@@ -30,6 +30,7 @@
 6.  **核心总结** (总结表): 本节内容的浓缩回顾。
 7.  **导航链接** (链接): 上一节、下一节、目录。
 8.  **图片引用** (Markdown): 罗列本节引用的 EPUB 图片链接。
+9.  **关联文件**: 必须创建同名的 `_学习讨论.md` 文件，用于存放 Q&A 和测试内容。
 
 ## 🗣️ 术语规范 (Terminology)
 
@@ -53,5 +54,5 @@
 
 - **项目根目录**: `/Users/bigzhu/Sync/Projects/Wyckoff`
 - **笔记目录**: `第一章_聪明钱解读市场的工具/`
-- **EPUB 图片位置**: `wyckoff_content/OEBPS/images/` (需确认具体路径)
+- **EPUB 图片位置**: `wyckoff_content/OEBPS/` (图片文件直接位于该目录)
 - **CLAUDE.md**: `CLAUDE.md` (总纲)
