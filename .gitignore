@@ -1,6 +1,6 @@
 # EPUB 文件和内容
 *.epub
-wyckoff_content/
+
 
 # 乱码文件
 "第一章.md"
