@@ -87,7 +87,7 @@ Spring 有时也出现在派发早期的震荡中。
 
 ---
 
-## 五、特殊形式：震仓 (Terminal Shakeout)
+## 五、特殊形式：[震仓](../术语速查手册.md#shakeout) (Terminal Shakeout)
 
 震仓是发生在吸筹阶段末端的“特大号 [Spring](../术语速查手册.md#spring)”。
 
