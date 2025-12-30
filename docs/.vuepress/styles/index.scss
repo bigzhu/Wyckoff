@@ -1,36 +1,47 @@
 :root {
-  --mermaid-primary-color: #eef9f4;
-  --mermaid-border-color: #3eaf7c;
-  --mermaid-text-color: #2c3e50;
+    --mermaid-primary-bg: #f0f9f4;
+    --mermaid-border: #3eaf7c;
+    --mermaid-text: #2c3e50;
+    --mermaid-edge-bg: #ffffff;
+    --mermaid-secondary-bg: #f3f4f5;
 }
 
 html.dark {
-  --mermaid-primary-color: #1a2c23;
-  --mermaid-border-color: #3eaf7c;
-  --mermaid-text-color: #eef9f4;
+    /* 深度暗色方案，降低对比度减少刺眼感 */
+    --mermaid-primary-bg: #1e2d24;
+    /* 深绿灰 */
+    --mermaid-border: #2d7d56;
+    /* 调暗的绿色 */
+    --mermaid-text: #adbac7;
+    /* 柔和的文字色 */
+    --mermaid-edge-bg: #22272e;
+    --mermaid-secondary-bg: #2d333b;
 }
 
-/* 强制覆盖 Mermaid 的部分样式以适应暗色模式 */
-html.dark .mermaid svg {
-  background-color: transparent !important;
+/* 移除特定的样式覆盖，依靠变量注入 */
+.mermaid svg {
+    background-color: transparent !important;
 }
 
+/* 如果 Mermaid 内部没有正确使用变量，我们通过样式引导 */
 html.dark .mermaid .node rect,
 html.dark .mermaid .node circle,
 html.dark .mermaid .node polygon,
 html.dark .mermaid .node path {
-  fill: var(--mermaid-primary-color) !important;
-  stroke: var(--mermaid-border-color) !important;
+    fill: var(--mermaid-primary-bg) !important;
+    stroke: var(--mermaid-border) !important;
 }
 
-html.dark .mermaid .node .label {
-  color: var(--mermaid-text-color) !important;
+html.dark .mermaid .node .label,
+html.dark .mermaid .edgeLabel {
+    color: var(--mermaid-text) !important;
+    fill: var(--mermaid-text) !important;
 }
 
 html.dark .mermaid .edgePath .path {
-  stroke: var(--mermaid-border-color) !important;
+    stroke: var(--mermaid-border) !important;
 }
 
 html.dark .mermaid .marker {
-  fill: var(--mermaid-border-color) !important;
+    fill: var(--mermaid-border) !important;
 }
