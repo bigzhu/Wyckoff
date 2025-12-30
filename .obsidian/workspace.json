@@ -178,6 +178,7 @@
   },
   "active": "23abbde731146831",
   "lastOpenFiles": [
+    "docs/第三章_威氏逃顶策略/第三节_派发的确认阶段.md",
     "docs/第三章_威氏逃顶策略/第二节_CM的出货过程.md",
     "pnpm-lock.yaml.2881991133",
     "node_modules/@renovamen",
@@ -222,7 +223,6 @@
     "docs/第一章_聪明钱解读市场的工具/第七节_因果关系.md",
     "docs/第一章_聪明钱解读市场的工具/第一节_聪明钱的看盘顺序.md",
     "docs/get-started.md",
-    "docs/README.md",
-    "vuepress-starter/docs/get-started.md"
+    "docs/README.md"
   ]
 }
