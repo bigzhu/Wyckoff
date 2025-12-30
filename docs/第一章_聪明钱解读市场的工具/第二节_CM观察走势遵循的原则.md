@@ -69,9 +69,9 @@
 
 ```mermaid
 graph TD
-    S1[1. 恐慌抛售] -->|底部信号出现| S2[2. 反复测试]
-    S2 -->|吸筹过程进行| S3[3. 死角 + 加速清洗]
-    S3 -->|吸筹即将完成| S4[4. 停止行为 + 放量突破]
+    S1[1. [恐慌抛售 (SC)](../术语速查手册.md#sc-selling-climax)] -->|底部信号出现| S2[2. [反复测试 (ST)](../术语速查手册.md#st-secondary-test)]
+    S2 -->|吸筹过程进行| S3[3. [死角](../术语速查手册.md#death-zone) + 加速清洗]
+    S3 -->|吸筹即将完成| S4[4. [停止行为](../术语速查手册.md#stopping-action) + 放量突破]
     S4 -->|底部确认/吸筹完成| S5[进场 ✅]
     style S5 fill:#e6fffa,stroke:#4fd1c5,stroke-width:2px
 ```
