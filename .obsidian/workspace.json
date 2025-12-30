@@ -178,6 +178,9 @@
   },
   "active": "23abbde731146831",
   "lastOpenFiles": [
+    "fix_mermaid_links.py",
+    "fix_mermaid.py",
+    "cleanup_nav.py",
     "docs/术语速查手册.md",
     "docs/第二章_怎么知道主力机构开始接盘了/第九节_本章核心知识总结.md",
     "docs/后记_交易哲学与实战心得.md",
@@ -211,8 +214,6 @@
     "docs/wyckoff_content/OEBPS/text00010.html",
     "docs/wyckoff_content/OEBPS/toc.ncx",
     "docs/wyckoff_content/OEBPS/text00009.html",
-    "docs/wyckoff_content/OEBPS/text00008.html",
-    "docs/wyckoff_content/OEBPS/text00006.html",
     "docs/wyckoff_content/OEBPS/Image00164.jpg",
     "docs/wyckoff_content/OEBPS/Image00162.jpg",
     "docs/wyckoff_content/OEBPS/Image00161.jpg",
@@ -222,7 +223,6 @@
     "docs/wyckoff_content/OEBPS/Image00157.jpg",
     "docs/wyckoff_content/OEBPS/Image00156.jpg",
     "docs/wyckoff_content/OEBPS/Image00155.jpg",
-    "docs/wyckoff_content/OEBPS/Image00154.jpg",
-    "docs/第三章_威氏逃顶策略/第一节_牛市到顶的信号.md"
+    "docs/wyckoff_content/OEBPS/Image00154.jpg"
   ]
 }
