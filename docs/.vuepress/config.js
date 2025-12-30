@@ -4,6 +4,7 @@ import { viteBundler } from '@vuepress/bundler-vite'
 import { searchPlugin } from '@vuepress/plugin-search'
 import fs from 'node:fs'
 import path from 'node:path'
+import { markdownChartPlugin } from '@vuepress/plugin-markdown-chart'
 
 // 辅助函数：将中文数字转换为阿拉伯数字用于排序
 const cnToNum = (str) => {
@@ -105,6 +106,9 @@ export default defineUserConfig({
           placeholder: '搜索',
         },
       },
+    }),
+    markdownChartPlugin({
+      mermaid: true,
     }),
   ],
 
