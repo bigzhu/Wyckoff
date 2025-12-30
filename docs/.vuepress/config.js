@@ -30,6 +30,11 @@ const getSidebar = () => {
   const docsDir = path.resolve(__dirname, '..');
   const sidebar = [];
 
+  // 1. 前言
+  if (fs.existsSync(path.join(docsDir, '前言.md'))) {
+    sidebar.push('/前言.md');
+  }
+
   // 获取所有内容，并筛选出章节子目录
   const items = fs.readdirSync(docsDir).filter(item => {
     return fs.statSync(path.join(docsDir, item)).isDirectory() &&
@@ -58,10 +63,15 @@ const getSidebar = () => {
     }
   }
 
-  // 获取根目录下的 markdown 文件（排除 README 和 get-started）
+  // 2. 后记
+  if (fs.existsSync(path.join(docsDir, '后记_交易哲学与实战心得.md'))) {
+    sidebar.push('/后记_交易哲学与实战心得.md');
+  }
+
+  // 获取根目录下的 markdown 文件（排除 README, get-started, 前言, 后记）
   const rootFiles = fs.readdirSync(docsDir).filter(f => {
     return f.endsWith('.md') &&
-      !['README.md', 'get-started.md'].includes(f);
+      !['README.md', 'get-started.md', '前言.md', '后记_交易哲学与实战心得.md'].includes(f);
   });
 
   if (rootFiles.length > 0) {
