@@ -54,7 +54,7 @@ graph TD
 
 ## 三、案例 23：供应控制下的 Spring 失效 (图 5-30)
 
-### 1. 案例分析 (抢购高潮后的陷阱)
+### 1. 案例分析 ([BC(抢购高潮)](../术语速查手册.md#bc-buying-climax)后的陷阱)
 
 ![图 5-30：跳空阴线与弱势反弹](../wyckoff_content/OEBPS/Image00130.jpg)
 

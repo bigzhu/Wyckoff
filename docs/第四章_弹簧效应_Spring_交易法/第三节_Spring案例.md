@@ -73,13 +73,13 @@ graph TD
 
 ---
 
-## 四、派发前奏与抢购高潮 (图 4-11, 4-12)
+## 四、派发前奏与 [BC(抢购高潮)](../术语速查手册.md#bc-buying-climax) (图 4-11, 4-12)
 
 [Spring](../术语速查手册.md#spring) 有时也出现在派发早期的震荡中。
 
-![图 4-11：急涨与抢购高潮诊断](../wyckoff_content/OEBPS/Image00090.jpg)
+![图 4-11：急涨与 [BC(抢购高潮)](../术语速查手册.md#bc-buying-climax)诊断](../wyckoff_content/OEBPS/Image00090.jpg)
 
-- **技巧**：观察急速上涨是否突破阻力。若在空中无阻力处急速上涨，则是**[抢购高潮 (BC)](../术语速查手册.md#bc-buying-climax)**，预示派发开始。
+- **技巧**：观察急速上涨是否突破阻力。若在空中无阻力处急速上涨，则是**[BC(抢购高潮)](../术语速查手册.md#bc-buying-climax)**，预示派发开始。
 
 ![图 4-12：小区间内的 [Spring](../术语速查手册.md#spring)](../wyckoff_content/OEBPS/Image00091.jpg)
 
