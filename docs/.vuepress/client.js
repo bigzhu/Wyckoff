@@ -6,14 +6,13 @@ export default defineClientConfig({
         defineMermaidConfig({
             theme: 'base',
             themeVariables: {
-                primaryColor: 'var(--mermaid-primary-bg)',
-                primaryBorderColor: 'var(--mermaid-border)',
-                primaryTextColor: 'var(--mermaid-text)',
-                lineColor: 'var(--mermaid-border)',
-                edgeLabelBackground: 'var(--mermaid-edge-bg)',
-                tertiaryColor: 'var(--mermaid-secondary-bg)',
+                primaryColor: '#f0f9f4',
+                primaryBorderColor: '#3eaf7c',
+                primaryTextColor: '#2c3e50',
+                lineColor: '#3eaf7c',
+                edgeLabelBackground: '#ffffff',
+                tertiaryColor: '#f3f4f5',
                 fontSize: '14px',
-                darkMode: false, // 我们通过 CSS 变量控制，不使用 mermaid 的内建暗色模式转换
             },
         })
     },

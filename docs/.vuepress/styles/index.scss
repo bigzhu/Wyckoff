@@ -2,28 +2,39 @@
     --mermaid-primary-bg: #f0f9f4;
     --mermaid-border: #3eaf7c;
     --mermaid-text: #2c3e50;
-    --mermaid-edge-bg: #ffffff;
-    --mermaid-secondary-bg: #f3f4f5;
 }
 
 html.dark {
-    /* 深度暗色方案，降低对比度减少刺眼感 */
-    --mermaid-primary-bg: #1e2d24;
-    /* 深绿灰 */
-    --mermaid-border: #2d7d56;
-    /* 调暗的绿色 */
-    --mermaid-text: #adbac7;
-    /* 柔和的文字色 */
-    --mermaid-edge-bg: #22272e;
-    --mermaid-secondary-bg: #2d333b;
+    /* 深度暗色方案，对比度降到最低 */
+    --mermaid-primary-bg: #1a1a1c;
+    /* 接近黑色 */
+    --mermaid-border: #2d5a45;
+    /* 极其深绿 */
+    --mermaid-text: #8b949e;
+    /* 灰色文字，不刺眼 */
 }
 
-/* 移除特定的样式覆盖，依靠变量注入 */
+/* 强制覆盖 Mermaid 内部生成的颜色 */
 .mermaid svg {
     background-color: transparent !important;
 }
 
-/* 如果 Mermaid 内部没有正确使用变量，我们通过样式引导 */
+/* 通过 CSS 变量在运行时动态修改样式，这是最稳定支持暗黑模式的方法 */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node polygon,
+.mermaid .node path {
+    fill: #f0f9f4 !important;
+    /* 默认浅绿 */
+    stroke: #3eaf7c !important;
+}
+
+.mermaid .node .label,
+.mermaid .edgeLabel {
+    color: #2c3e50 !important;
+    fill: #2c3e50 !important;
+}
+
 html.dark .mermaid .node rect,
 html.dark .mermaid .node circle,
 html.dark .mermaid .node polygon,
@@ -44,4 +55,9 @@ html.dark .mermaid .edgePath .path {
 
 html.dark .mermaid .marker {
     fill: var(--mermaid-border) !important;
+}
+
+html.dark .mermaid .messageLine0,
+html.dark .mermaid .messageLine1 {
+    stroke: var(--mermaid-border) !important;
 }
