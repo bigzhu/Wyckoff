@@ -30,7 +30,7 @@ const getSidebar = () => {
   const docsDir = path.resolve(__dirname, '..');
   const sidebar = [];
 
-  // 获取所有目录，过滤非章节目录
+  // 获取所有内容，并筛选出章节子目录
   const items = fs.readdirSync(docsDir).filter(item => {
     return fs.statSync(path.join(docsDir, item)).isDirectory() &&
       !item.startsWith('.') &&
@@ -41,18 +41,14 @@ const getSidebar = () => {
   items.sort((a, b) => cnToNum(a) - cnToNum(b));
 
   for (const item of items) {
-    // 假设目录名格式为 "第一章_Title" -> 提取 Title 作为显示文本，或者直接用目录名
-    // 这里我们简单处理：将下划线替换为空格，或者保留原样，sidebar header通常显示完整目录名比较清晰
-    // 但为了美观，我们可以尝试把 "第一章_..." 格式化一下
     let text = item.replace(/_/g, ' ');
 
     const itemPath = path.join(docsDir, item);
     const children = fs.readdirSync(itemPath)
-      .filter(f => f.endsWith('.md') && f !== 'README.md') // 过滤 README.md 避免重复（通常作为章节首页）
+      .filter(f => f.endsWith('.md') && f !== 'README.md')
       .sort((a, b) => cnToNum(a) - cnToNum(b))
       .map(f => `/${item}/${f}`);
 
-    // 如果该章节下有 children 才添加
     if (children.length > 0) {
       sidebar.push({
         text,
@@ -61,6 +57,21 @@ const getSidebar = () => {
       });
     }
   }
+
+  // 获取根目录下的 markdown 文件（排除 README 和 get-started）
+  const rootFiles = fs.readdirSync(docsDir).filter(f => {
+    return f.endsWith('.md') &&
+      !['README.md', 'get-started.md'].includes(f);
+  });
+
+  if (rootFiles.length > 0) {
+    sidebar.push({
+      text: '补充内容',
+      collapsible: false,
+      children: rootFiles.map(f => `/${f}`)
+    });
+  }
+
   return sidebar;
 };
 
