@@ -14,7 +14,7 @@ features:
   - title: 核心思想
     details: 供求关系、因果关系、努力和结果
   - title: 关键信号
-    details: 识别吸筹、派发、停止行为
+    details: 识别[吸筹](./术语速查手册.md#accumulation)、派发、停止行为
   - title: 实战应用
     details: 不依赖指标，只看价格和成交量
 footer: MIT Licensed | Wyckoff 读书笔记
@@ -39,7 +39,7 @@ footer: MIT Licensed | Wyckoff 读书笔记
 **核心思想**：
 
 - 市场由主力机构（聪明钱）和公众组成
-- 主力在底部吸筹，顶部派发
+- 主力在底部[吸筹](./术语速查手册.md#accumulation)，顶部派发
 - 通过供求关系分析可以识别主力意图
 - 在关键位置提前介入，获取最大利润
 
