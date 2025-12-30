@@ -37,7 +37,7 @@ graph TD
 
 ## 三、识别与风险控制 (图 4-1)
 
-![图 4-1：上升趋势中的 [Spring](../术语速查手册.md#spring)](../wyckoff_content/OEBPS/Image00080.jpg)
+![图 4-1：上升趋势中的 Spring](../wyckoff_content/OEBPS/Image00080.jpg)
 
 ### 1. 识别标准
 - **时间窗口**：价格跌破支撑后，通常应在 **1-3 根蜡烛** 之内回到支撑上方。

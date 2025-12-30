@@ -19,7 +19,7 @@
 
 根据突破支撑时的**蜡烛力度**与**成交量**，可分为三种类型：
 
-![图 4-2：[Spring](../术语速查手册.md#spring) 的三种类型](../wyckoff_content/OEBPS/Image00081.jpg)
+![图 4-2：Spring 的三种类型](../wyckoff_content/OEBPS/Image00081.jpg)
 
 ### 1. 供应沉重型 (左)
 - **特征**：突破支撑时，蜡烛长、成交量大。

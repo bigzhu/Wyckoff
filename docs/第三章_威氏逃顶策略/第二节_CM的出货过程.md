@@ -53,7 +53,7 @@ graph TD
 
 ### 2. [AR(自动回落)](../术语速查手册.md#ar-automatic-rally-reaction) 与 二次测试 (ST)
 
-![图 3-6：[BC(抢购高潮)](../术语速查手册.md#bc-buying-climax)/AR(自动回落)/ST 示意图](../wyckoff_content/OEBPS/Image00059.jpg)
+![图 3-6：BC(抢购高潮)/AR(自动回落)/ST 示意图](../wyckoff_content/OEBPS/Image00059.jpg)
 
 - **二次测试 (ST) 的成功标志**：
   - **反弹无力**：价格无法创新高。

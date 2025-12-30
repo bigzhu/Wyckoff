@@ -20,7 +20,7 @@
 
 ### 2. JOC 突破点的回测与二次测试 (图 4-6, 4-16)
 
-![图 4-6：[Spring](../术语速查手册.md#spring) 的二次测试](../wyckoff_content/OEBPS/Image00085.jpg)
+![图 4-6：Spring 的二次测试](../wyckoff_content/OEBPS/Image00085.jpg)
 
 - **行为**：[JOC](../术语速查手册.md#joc-jump-across-the-creek) 之后开始区间交易。蜡烛 1 是 [Spring](../术语速查手册.md#spring)，但成交量大说明供应未耗尽。
 - **确认**：蜡烛 2 对 [Spring](../术语速查手册.md#spring) 进行二次测试，成交量极小，确认为理想进场点。
@@ -37,7 +37,7 @@
 
 ### 1. 支撑位无需求反弹 (图 4-7, 4-14)
 
-![图 4-7：[Spring](../术语速查手册.md#spring) 失败表现](../wyckoff_content/OEBPS/Image00086.jpg)
+![图 4-7：Spring 失败表现](../wyckoff_content/OEBPS/Image00086.jpg)
 
 - **现象**：[Spring](../术语速查手册.md#spring) 之后（蜡烛 3）的反弹没有吸引到买单，未能持续创新高。
 - **逻辑**：无需求反弹判定支撑无效，价格将突破支撑继续走低。
@@ -62,12 +62,12 @@ graph TD
 
 ### 1. 需求匮乏的熊市案例 (图 4-8, 4-9)
 
-![图 4-8：熊市中的 [Spring](../术语速查手册.md#spring) 假象](../wyckoff_content/OEBPS/Image00087.jpg)
+![图 4-8：熊市中的 Spring 假象](../wyckoff_content/OEBPS/Image00087.jpg)
 
 - **现象**：蜡烛 1 突破支撑，看似是不错的缩量 [Spring](../术语速查手册.md#spring)。
 - **风险**：大背景是熊市，反弹极低成交量说明无需求。
 
-![图 4-9：熊市 [Spring](../术语速查手册.md#spring) 失败后果](../wyckoff_content/OEBPS/Image00088.jpg)
+![图 4-9：熊市 Spring 失败后果](../wyckoff_content/OEBPS/Image00088.jpg)
 
 - **后果**：价格并没有反转，而是继续向下寻找需求。
 
@@ -77,11 +77,11 @@ graph TD
 
 [Spring](../术语速查手册.md#spring) 有时也出现在派发早期的震荡中。
 
-![图 4-11：急涨与 [BC(抢购高潮)](../术语速查手册.md#bc-buying-climax)诊断](../wyckoff_content/OEBPS/Image00090.jpg)
+![图 4-11：急涨与 BC(抢购高潮)诊断](../wyckoff_content/OEBPS/Image00090.jpg)
 
 - **技巧**：观察急速上涨是否突破阻力。若在空中无阻力处急速上涨，则是**[BC(抢购高潮)](../术语速查手册.md#bc-buying-climax)**，预示派发开始。
 
-![图 4-12：小区间内的 [Spring](../术语速查手册.md#spring)](../wyckoff_content/OEBPS/Image00091.jpg)
+![图 4-12：小区间内的 Spring](../wyckoff_content/OEBPS/Image00091.jpg)
 
 - **特征**：收盘价相近的小区间通常通过 [Spring](../术语速查手册.md#spring) 或 [UT](../术语速查手册.md#ut-upthrust)（上冲回落）结束并开启大行情。
 

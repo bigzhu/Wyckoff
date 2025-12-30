@@ -92,8 +92,12 @@ export default defineUserConfig({
   title: 'Wyckoff 读书笔记',
   description: '聪明的钱解读市场的工具',
 
+  head: [
+    ['link', { rel: 'icon', href: '/Wyckoff/logo.png' }]
+  ],
+
   theme: defaultTheme({
-    logo: 'https://vuejs.press/images/hero.png',
+    logo: '/logo.png',
 
     navbar: [
       {
