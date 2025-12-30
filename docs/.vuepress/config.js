@@ -91,6 +91,10 @@ export default defineUserConfig({
         link: '/',
       },
       {
+        text: '术语速查',
+        link: '/术语速查手册.md',
+      },
+      {
         text: '第一章',
         link: '/第一章_聪明钱解读市场的工具/第一节_聪明钱的看盘顺序.md',
       },
