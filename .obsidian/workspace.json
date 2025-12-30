@@ -178,6 +178,7 @@
   },
   "active": "23abbde731146831",
   "lastOpenFiles": [
+    "node_modules/@vuepress",
     "docs/第三章_威氏逃顶策略/README.md",
     "docs/第二章_怎么知道主力机构开始接盘了/README.md",
     "docs/第一章_聪明钱解读市场的工具/README.md",
@@ -222,7 +223,6 @@
     "docs/第一章_聪明钱解读市场的工具/第一节_聪明钱的看盘顺序.md",
     "docs/get-started.md",
     "docs/README.md",
-    "vuepress-starter/docs/get-started.md",
-    "vuepress-starter/docs/README.md"
+    "vuepress-starter/docs/get-started.md"
   ]
 }

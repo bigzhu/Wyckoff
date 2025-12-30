@@ -1,6 +1,67 @@
 import { defaultTheme } from '@vuepress/theme-default'
 import { defineUserConfig } from 'vuepress'
 import { viteBundler } from '@vuepress/bundler-vite'
+import { searchPlugin } from '@vuepress/plugin-search'
+import fs from 'node:fs'
+import path from 'node:path'
+
+// 辅助函数：将中文数字转换为阿拉伯数字用于排序
+const cnToNum = (str) => {
+  const map = {
+    '一': 1, '二': 2, '三': 3, '四': 4, '五': 5,
+    '六': 6, '七': 7, '八': 8, '九': 9, '十': 10
+  };
+  // 提取"第X节"或"第X章"中的数字
+  const match = str.match(/第([一二三四五六七八九十]+)[节章]/);
+  if (match) {
+    let num = 0;
+    const s = match[1];
+    if (s.length === 1) return map[s] || 99;
+    if (s.length === 2 && s.startsWith('十')) return 10 + (map[s[1]] || 0);
+    // 简单处理常见的十几
+    return 99;
+  }
+  return 99;
+};
+
+// 动态生成侧边栏
+const getSidebar = () => {
+  const docsDir = path.resolve(__dirname, '..');
+  const sidebar = [];
+
+  // 获取所有目录，过滤非章节目录
+  const items = fs.readdirSync(docsDir).filter(item => {
+    return fs.statSync(path.join(docsDir, item)).isDirectory() &&
+      !item.startsWith('.') &&
+      !item.startsWith('wyckoff_content');
+  });
+
+  // 对章节目录进行排序
+  items.sort((a, b) => cnToNum(a) - cnToNum(b));
+
+  for (const item of items) {
+    // 假设目录名格式为 "第一章_Title" -> 提取 Title 作为显示文本，或者直接用目录名
+    // 这里我们简单处理：将下划线替换为空格，或者保留原样，sidebar header通常显示完整目录名比较清晰
+    // 但为了美观，我们可以尝试把 "第一章_..." 格式化一下
+    let text = item.replace(/_/g, ' ');
+
+    const itemPath = path.join(docsDir, item);
+    const children = fs.readdirSync(itemPath)
+      .filter(f => f.endsWith('.md') && f !== 'README.md') // 过滤 README.md 避免重复（通常作为章节首页）
+      .sort((a, b) => cnToNum(a) - cnToNum(b))
+      .map(f => `/${item}/${f}`);
+
+    // 如果该章节下有 children 才添加
+    if (children.length > 0) {
+      sidebar.push({
+        text,
+        collapsible: true,
+        children
+      });
+    }
+  }
+  return sidebar;
+};
 
 export default defineUserConfig({
   lang: 'zh-CN',
@@ -22,45 +83,29 @@ export default defineUserConfig({
       },
     ],
 
-    sidebar: [
-      {
-        text: '第一章 聪明钱解读市场的工具',
-        collapsible: true,
-        children: [
-          '/第一章_聪明钱解读市场的工具/第一节_聪明钱的看盘顺序.md',
-          '/第一章_聪明钱解读市场的工具/第二节_CM观察走势遵循的原则.md',
-          '/第一章_聪明钱解读市场的工具/第三节_供求关系.md',
-          '/第一章_聪明钱解读市场的工具/第四节_公众对支撑和阻力的误解.md',
-          '/第一章_聪明钱解读市场的工具/第五节_如何识别供应和需求扩大.md',
-          '/第一章_聪明钱解读市场的工具/第六节_牛市中怎么看出供应进场了.md',
-          '/第一章_聪明钱解读市场的工具/第七节_因果关系.md',
-          '/第一章_聪明钱解读市场的工具/第八节_努力和结果的关系.md',
-          '/第一章_聪明钱解读市场的工具/第九节_总结.md',
-        ],
-      },
-      {
-        text: '第二章 怎么知道主力机构开始接盘了',
-        collapsible: true,
-        children: [
-          '/第二章_怎么知道主力机构开始接盘了/第一节_熊市终止的市场行为.md',
-          '/第二章_怎么知道主力机构开始接盘了/第二节_停止行为.md',
-          '/第二章_怎么知道主力机构开始接盘了/第三节_吸筹的第二阶段.md',
-          '/第二章_怎么知道主力机构开始接盘了/第四节_吸筹的第三阶段.md',
-          '/第二章_怎么知道主力机构开始接盘了/第五节_进入牛市.md',
-          '/第二章_怎么知道主力机构开始接盘了/第六节_吸筹过程的操作综合案例.md',
-          '/第二章_怎么知道主力机构开始接盘了/第七节_熊市结束的另一种模式.md',
-          '/第二章_怎么知道主力机构开始接盘了/第八节_震仓.md',
-        ],
-      },
-      {
-        text: '第三章 威氏逃顶策略',
-        collapsible: true,
-        children: [
-          '/第三章_威氏逃顶策略/第一节_牛市到顶的信号.md',
-        ],
-      },
-    ],
+    // 使用动态生成的侧边栏
+    sidebar: getSidebar(),
+
+    lastUpdated: true,
+    lastUpdatedText: '上次更新',
+    contributors: true,
+    contributorsText: '贡献者',
+    editLink: true,
+    editLinkText: '在 GitHub 上编辑此页',
+    docsRepo: 'https://github.com/bigzhu/Wyckoff',
+    docsBranch: 'main',
+    docsDir: 'docs',
   }),
+
+  plugins: [
+    searchPlugin({
+      locales: {
+        '/': {
+          placeholder: '搜索',
+        },
+      },
+    }),
+  ],
 
   bundler: viteBundler(),
 })
