@@ -1,0 +1,36 @@
+:root {
+  --mermaid-primary-color: #eef9f4;
+  --mermaid-border-color: #3eaf7c;
+  --mermaid-text-color: #2c3e50;
+}
+
+html.dark {
+  --mermaid-primary-color: #1a2c23;
+  --mermaid-border-color: #3eaf7c;
+  --mermaid-text-color: #eef9f4;
+}
+
+/* 强制覆盖 Mermaid 的部分样式以适应暗色模式 */
+html.dark .mermaid svg {
+  background-color: transparent !important;
+}
+
+html.dark .mermaid .node rect,
+html.dark .mermaid .node circle,
+html.dark .mermaid .node polygon,
+html.dark .mermaid .node path {
+  fill: var(--mermaid-primary-color) !important;
+  stroke: var(--mermaid-border-color) !important;
+}
+
+html.dark .mermaid .node .label {
+  color: var(--mermaid-text-color) !important;
+}
+
+html.dark .mermaid .edgePath .path {
+  stroke: var(--mermaid-border-color) !important;
+}
+
+html.dark .mermaid .marker {
+  fill: var(--mermaid-border-color) !important;
+}
