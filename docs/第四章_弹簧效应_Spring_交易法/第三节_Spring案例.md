@@ -2,44 +2,44 @@
 
 ## 核心思想
 
-本节通过多个实战案例，深入剖析 Spring 在不同市场背景（上升趋势、盘整区、JOC 回测、熊市陷阱、[吸筹](../术语速查手册.md#accumulation)末端）下的表现。核心在于通过观察**需求是否力挺**以及**卖盘背景的影响**来判定 Spring 的真实性和可靠性。
+本节通过多个实战案例，深入剖析 Spring 在不同市场背景（上升趋势、盘整区、JOC 回测、熊市陷阱、吸筹末端）下的表现。核心在于通过观察**需求是否力挺**以及**卖盘背景的影响**来判定 Spring 的真实性和可靠性。
 
 ---
 
-## 一、上升趋势中的 [Spring](../术语速查手册.md#spring)
+## 一、上升趋势中的 Spring
 
-在牛市中，[Spring](../术语速查手册.md#spring) 通常是回调结束和趋势恢复的信号。
+在牛市中，[Spring](../术语速查手册.md#spring)通常是回调结束和趋势恢复的信号。
 
 ### 1. 窄幅盘整与弹跳板 (图 4-5)
 
 ![图 4-5：弹跳板行为](../wyckoff_content/OEBPS/Image00084.jpg)
 
-- **场景**：牛市中的窄幅盘整底部出现 [Spring](../术语速查手册.md#spring)。
-- **行为**：蜡烛 1 出现 [Spring](../术语速查手册.md#spring)。随后价格回调到 3，成交量和蜡烛极小，形成“弹跳板”。
-- **意义**：市场已准备好起跳，随后出现 [JOC](../术语速查手册.md#joc-jump-across-the-creek)（跳离震荡区）。
+- **场景**：牛市中的窄幅盘整底部出现[Spring](../术语速查手册.md#spring)。
+- **行为**：蜡烛 1 出现[Spring](../术语速查手册.md#spring)。随后价格回调到 3，成交量和蜡烛极小，形成“弹跳板”。
+- **意义**：市场已准备好起跳，随后出现[JOC](../术语速查手册.md#joc-jump-across-the-creek)（跳离震荡区）。
 
 ### 2. JOC 突破点的回测与二次测试 (图 4-6, 4-16)
 
 ![图 4-6：Spring 的二次测试](../wyckoff_content/OEBPS/Image00085.jpg)
 
-- **行为**：[JOC](../术语速查手册.md#joc-jump-across-the-creek) 之后开始区间交易。蜡烛 1 是 [Spring](../术语速查手册.md#spring)，但成交量大说明供应未耗尽。
-- **确认**：蜡烛 2 对 [Spring](../术语速查手册.md#spring) 进行二次测试，成交量极小，确认为理想进场点。
+- **行为**：[JOC](../术语速查手册.md#joc-jump-across-the-creek)之后开始区间交易。蜡烛 1 是[Spring](../术语速查手册.md#spring)，但成交量大说明供应未耗尽。
+- **确认**：蜡烛 2 对[Spring](../术语速查手册.md#spring)进行二次测试，成交量极小，确认为理想进场点。
 
-![图 4-16：[JOC](../术语速查手册.md#joc-jump-across-the-creek) 回测中的 [Spring](../术语速查手册.md#spring) 与终止行为](../wyckoff_content/OEBPS/Image00095.jpg)
+![图 4-16：[JOC](../术语速查手册.md#joc-jump-across-the-creek)回测中的[Spring](../术语速查手册.md#spring)与终止行为](../wyckoff_content/OEBPS/Image00095.jpg)
 
-- **细节**：蜡烛 3 在支撑位出现 [Spring](../术语速查手册.md#spring) 和“终止行为”（高量小蜡烛）。蜡烛 4 需求持续，预示上涨开始。
+- **细节**：蜡烛 3 在支撑位出现[Spring](../术语速查手册.md#spring)和“终止行为”（高量小蜡烛）。蜡烛 4 需求持续，预示上涨开始。
 
 ---
 
-## 二、[Spring](../术语速查手册.md#spring) 失败的警示
+## 二、Spring 失败的警示
 
-[Spring](../术语速查手册.md#spring) 失败往往是牛市终结的重要预警。
+[Spring](../术语速查手册.md#spring)失败往往是牛市终结的重要预警。
 
 ### 1. 支撑位无需求反弹 (图 4-7, 4-14)
 
 ![图 4-7：Spring 失败表现](../wyckoff_content/OEBPS/Image00086.jpg)
 
-- **现象**：[Spring](../术语速查手册.md#spring) 之后（蜡烛 3）的反弹没有吸引到买单，未能持续创新高。
+- **现象**：[Spring](../术语速查手册.md#spring)之后（蜡烛 3）的反弹没有吸引到买单，未能持续创新高。
 - **逻辑**：无需求反弹判定支撑无效，价格将突破支撑继续走低。
 
 ![图 4-14：需求缺失导致的支撑跌破](../wyckoff_content/OEBPS/Image00093.jpg)
@@ -56,15 +56,15 @@ graph TD
 
 ---
 
-## 三、熊市中的 [Spring](../术语速查手册.md#spring) 陷阱
+## 三、熊市中的 Spring 陷阱
 
-**严禁在卖盘控制的背景下寻找 [Spring](../术语速查手册.md#spring)。**
+**严禁在卖盘控制的背景下寻找 **[**Spring**](../术语速查手册.md#spring)**。**
 
 ### 1. 需求匮乏的熊市案例 (图 4-8, 4-9)
 
 ![图 4-8：熊市中的 Spring 假象](../wyckoff_content/OEBPS/Image00087.jpg)
 
-- **现象**：蜡烛 1 突破支撑，看似是不错的缩量 [Spring](../术语速查手册.md#spring)。
+- **现象**：蜡烛 1 突破支撑，看似是不错的缩量[Spring](../术语速查手册.md#spring)。
 - **风险**：大背景是熊市，反弹极低成交量说明无需求。
 
 ![图 4-9：熊市 Spring 失败后果](../wyckoff_content/OEBPS/Image00088.jpg)
@@ -73,23 +73,25 @@ graph TD
 
 ---
 
-## 四、派发前奏与 [BC(抢购高潮)](../术语速查手册.md#bc-buying-climax) (图 4-11, 4-12)
+## 四、派发前奏与 BC(抢购高潮)(图 4-11, 4-12)
 
-[Spring](../术语速查手册.md#spring) 有时也出现在派发早期的震荡中。
+[Spring](../术语速查手册.md#spring)有时也出现在派发早期的震荡中。
 
 ![图 4-11：急涨与 BC(抢购高潮)诊断](../wyckoff_content/OEBPS/Image00090.jpg)
 
-- **技巧**：观察急速上涨是否突破阻力。若在空中无阻力处急速上涨，则是**[BC(抢购高潮)](../术语速查手册.md#bc-buying-climax)**，预示派发开始。
+- **技巧**：观察急速上涨是否突破阻力。若在空中无阻力处急速上涨，则是[**BC(抢购高潮)**](../术语速查手册.md#bc-buying-climax)，预示派发开始。
 
 ![图 4-12：小区间内的 Spring](../wyckoff_content/OEBPS/Image00091.jpg)
 
-- **特征**：收盘价相近的小区间通常通过 [Spring](../术语速查手册.md#spring) 或 [UT](../术语速查手册.md#ut-upthrust)（上冲回落）结束并开启大行情。
+- **特征**：收盘价相近的小区间通常通过[Spring](../术语速查手册.md#spring)或[UT](../术语速查手册.md#ut-upthrust)（上冲回落）结束并开启大行情。
 
 ---
 
-## 五、特殊形式：[震仓](../术语速查手册.md#shakeout) (Terminal Shakeout)
+## 五、特殊形式：震仓 (Terminal Shakeout)
 
-震仓是发生在[吸筹](../术语速查手册.md#accumulation)阶段末端的“特大号 [Spring](../术语速查手册.md#spring)”。
+震仓是发生在吸筹阶段末端的“特大号
+
+[Spring](../术语速查手册.md#spring)”。
 
 ### 1. 震仓的实战意义 (图 4-21)
 
@@ -100,10 +102,8 @@ graph TD
 
 ---
 
-## 📈 实战总结：[Spring](../术语速查手册.md#spring) 综合判断图
+## 📈 实战总结：Spring 综合判断图
 
 ![图 4-18 & 4-19 综合：供应战胜需求的过程](../wyckoff_content/OEBPS/Image00097.jpg)
 
-![图 4-19](../wyckoff_content/OEBPS/Image00098.jpg)
-
-通过对比图 4-18 的增量下影线与图 4-19 的缩量反弹，可以清晰识别出**供应战胜需求**的转折点。
+![图 4-19](../wyckoff_content/OEBPS/Image00098.jpg)通过对比图 4-18 的增量下影线与图 4-19 的缩量反弹，可以清晰识别出**供应战胜需求**的转折点。

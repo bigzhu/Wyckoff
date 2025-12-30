@@ -11,10 +11,14 @@
             "id": "23abbde731146831",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "docs/第一章_聪明钱解读市场的工具/第一节_聪明钱的看盘顺序.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "第一节_聪明钱的看盘顺序"
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "docs/第一章_聪明钱解读市场的工具/第一节_聪明钱的看盘顺序.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "第一节_聪明钱的看盘顺序 的反向链接列表"
             }
           },
           {
@@ -108,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "docs/第一章_聪明钱解读市场的工具/第一节_聪明钱的看盘顺序.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "第一节_聪明钱的看盘顺序 的出链列表"
             }
           },
           {
@@ -150,12 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "docs/第一章_聪明钱解读市场的工具/第一节_聪明钱的看盘顺序.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "第一节_聪明钱的看盘顺序 的大纲"
             }
           }
         ]
@@ -178,6 +185,12 @@
   },
   "active": "23abbde731146831",
   "lastOpenFiles": [
+    "fix_comprehensive_formatting.py",
+    "remove_accumulation_links.py",
+    "fix_link_spacing.py",
+    "scan_issues.py",
+    "fix_header_links.py",
+    "fix_bold_links.py",
     "fix_nested_links.py",
     "docs/前言.md",
     "fix_mermaid_links.py",
@@ -201,19 +214,13 @@
     "docs/第四章_弹簧效应_Spring_交易法/第二节_Spring的位置和种类.md",
     "docs/第四章_弹簧效应_Spring_交易法/第一节_什么是Spring.md",
     "docs/第四章_弹簧效应_Spring_交易法/README.md",
-    "docs/第四章_弹簧效应_Spring_交易法",
     "docs/第三章_威氏逃顶策略/第五节_总结.md",
     "docs/第三章_威氏逃顶策略/第四节_派发案例.md",
     "docs/第三章_威氏逃顶策略/第三节_派发的确认阶段.md",
     "docs/第三章_威氏逃顶策略/第二节_CM的出货过程.md",
-    "pnpm-lock.yaml.2881991133",
-    "node_modules/@renovamen",
-    "node_modules/@vuepress",
     "docs/第三章_威氏逃顶策略/README.md",
     "docs/第二章_怎么知道主力机构开始接盘了/README.md",
     "docs/第一章_聪明钱解读市场的工具/README.md",
-    "docs/wyckoff_content/OEBPS/text00010.html",
-    "docs/wyckoff_content/OEBPS/toc.ncx",
     "docs/wyckoff_content/OEBPS/Image00164.jpg",
     "docs/wyckoff_content/OEBPS/Image00162.jpg",
     "docs/wyckoff_content/OEBPS/Image00161.jpg",
