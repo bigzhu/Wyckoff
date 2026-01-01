@@ -141,3 +141,12 @@ div[vp-content] img,
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     /* 增加层次感 */
 }
+
+/* --- 链接样式优化 --- */
+a {
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
