@@ -64,6 +64,7 @@ html.dark .mermaid .messageLine1 {
 /* --- iPad 适配: 强制显示侧边栏开关 --- */
 /* VuePress 默认只在 < 719px 显示开关。这里强制在 1200px 以下 (iPad 横屏) 也使用移动端侧边栏模式 */
 @media (max-width: 1200px) {
+
     /* 1. 显示左上角的汉堡菜单按钮 */
     .toggle-sidebar-button {
         display: block !important;
@@ -84,9 +85,59 @@ html.dark .mermaid .messageLine1 {
     .theme-container .page {
         padding-left: 0 !important;
     }
-    
+
     /* 5. 调整Navbar标题位置，避免被按钮遮挡 (视情况而定，默认通常可以) */
     .theme-container .navbar {
         padding-left: 4rem;
     }
+}
+
+/* --- 全局布局调整 (减少左右留白) --- */
+:root {
+    --content-width: 1200px !important;
+    /* 核心：覆盖默认的 740px 宽度变量 */
+}
+
+/* 兼容性覆盖：针对带有 vp-content 属性的容器 */
+div[vp-content] {
+    max-width: 1200px !important;
+    margin: 0 auto;
+    padding: 2rem 2.5rem;
+}
+
+/* --- 表格样式调优 --- */
+div[vp-content] table,
+.theme-default-content table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 1rem 0;
+    border-collapse: collapse;
+}
+
+/* 强制单元格内容不换行 */
+div[vp-content] table th,
+div[vp-content] table td,
+.theme-default-content table th,
+.theme-default-content table td {
+    white-space: nowrap !important;
+    padding: 0.6em 1em;
+}
+
+/* --- 图片样式优化 --- */
+div[vp-content] img,
+.theme-default-content img {
+    max-width: 740px !important;
+    /* 限制最大宽度，防止图片过大 */
+    width: 100%;
+    /* 在小屏幕下自适应 */
+    height: auto;
+    display: block;
+    margin: 1.5rem 0;
+    /* 左对齐 */
+    border-radius: 4px;
+    /* 轻微圆角 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* 增加层次感 */
 }
