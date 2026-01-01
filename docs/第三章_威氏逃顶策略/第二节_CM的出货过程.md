@@ -14,7 +14,7 @@
 | [**BC(抢购高潮)**](../术语速查手册.md#bc-buying-climax)               | [BC(抢购高潮)](../术语速查手册.md#bc-buying-climax), 价格急涨吸引公众疯狂买入                 | 核心转折点，需求达到顶峰并被供应吸收                                   |
 | [**AR(自动回落)**](../术语速查手册.md#ar-automatic-rally-reaction)    | Automatic Reaction, [BC(抢购高潮)](../术语速查手册.md#bc-buying-climax)后的首次显著回调      | 初步确认供应控制了局面                                                 |
 | [**二次测试 (ST)**](../术语速查手册.md#st-secondary-test)             | Secondary Test, 价格再次上探[BC(抢购高潮)](../术语速查手册.md#bc-buying-climax)或其附近区域 | 测试市场上剩余的需求是否有力                                           |
-| [**冰线 (Ice Line)**](../术语速查手册.md#ice-line-ice)                | 派发区底部的支撑价位                                                                          | [CM(狗庄)](../术语速查手册.md#cm-composite-man)维持出货价格的最后防线 |
+| **冰线 (Ice Line)**                | 派发区底部的支撑价位                                                                          | [CM(狗庄)](../术语速查手册.md#cm-composite-man)维持出货价格的最后防线 |
 | **破冰 (Break of Ice)**                                               | 价格以长阴放量跌破支撑线                                                                      | 确认派发完成，熊市正式开始                                             |
 | [**最后派发点 (LPSY)**](../术语速查手册.md#lpsy-last-point-of-supply) | Last Point of Supply, 破冰后的弱势反弹                                                        | 最后的离场机会或极佳的做空位置                                         |
 

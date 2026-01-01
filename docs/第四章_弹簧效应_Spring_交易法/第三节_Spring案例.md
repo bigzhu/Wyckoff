@@ -8,38 +8,38 @@
 
 ## 一、上升趋势中的 Spring
 
-在牛市中，[Spring](../术语速查手册.md#spring)通常是回调结束和趋势恢复的信号。
+在牛市中，Spring通常是回调结束和趋势恢复的信号。
 
 ### 1. 窄幅盘整与弹跳板 (图 4-5)
 
 ![图 4-5：弹跳板行为](../wyckoff_content/OEBPS/Image00084.jpg)
 
-- **场景**：牛市中的窄幅盘整底部出现[Spring](../术语速查手册.md#spring)。
-- **行为**：蜡烛 1 出现[Spring](../术语速查手册.md#spring)。随后价格回调到 3，成交量和蜡烛极小，形成“弹跳板”。
+- **场景**：牛市中的窄幅盘整底部出现Spring。
+- **行为**：蜡烛 1 出现Spring。随后价格回调到 3，成交量和蜡烛极小，形成“弹跳板”。
 - **意义**：市场已准备好起跳，随后出现[JOC](../术语速查手册.md#joc-jump-across-the-creek)（跳离震荡区）。
 
 ### 2. JOC 突破点的回测与二次测试 (图 4-6, 4-16)
 
 ![图 4-6：Spring 的二次测试](../wyckoff_content/OEBPS/Image00085.jpg)
 
-- **行为**：[JOC](../术语速查手册.md#joc-jump-across-the-creek)之后开始区间交易。蜡烛 1 是[Spring](../术语速查手册.md#spring)，但成交量大说明供应未耗尽。
-- **确认**：蜡烛 2 对[Spring](../术语速查手册.md#spring)进行二次测试，成交量极小，确认为理想进场点。
+- **行为**：[JOC](../术语速查手册.md#joc-jump-across-the-creek)之后开始区间交易。蜡烛 1 是Spring，但成交量大说明供应未耗尽。
+- **确认**：蜡烛 2 对Spring进行二次测试，成交量极小，确认为理想进场点。
 
-![图 4-16：[JOC](../术语速查手册.md#joc-jump-across-the-creek)回测中的[Spring](../术语速查手册.md#spring)与终止行为](../wyckoff_content/OEBPS/Image00095.jpg)
+![图 4-16：[JOC](../术语速查手册.md#joc-jump-across-the-creek)回测中的Spring与终止行为](../wyckoff_content/OEBPS/Image00095.jpg)
 
-- **细节**：蜡烛 3 在支撑位出现[Spring](../术语速查手册.md#spring)和“终止行为”（高量小蜡烛）。蜡烛 4 需求持续，预示上涨开始。
+- **细节**：蜡烛 3 在支撑位出现Spring和“终止行为”（高量小蜡烛）。蜡烛 4 需求持续，预示上涨开始。
 
 ---
 
 ## 二、Spring 失败的警示
 
-[Spring](../术语速查手册.md#spring)失败往往是牛市终结的重要预警。
+Spring失败往往是牛市终结的重要预警。
 
 ### 1. 支撑位无需求反弹 (图 4-7, 4-14)
 
 ![图 4-7：Spring 失败表现](../wyckoff_content/OEBPS/Image00086.jpg)
 
-- **现象**：[Spring](../术语速查手册.md#spring)之后（蜡烛 3）的反弹没有吸引到买单，未能持续创新高。
+- **现象**：Spring之后（蜡烛 3）的反弹没有吸引到买单，未能持续创新高。
 - **逻辑**：无需求反弹判定支撑无效，价格将突破支撑继续走低。
 
 ![图 4-14：需求缺失导致的支撑跌破](../wyckoff_content/OEBPS/Image00093.jpg)
@@ -58,13 +58,13 @@ graph TD
 
 ## 三、熊市中的 Spring 陷阱
 
-**严禁在卖盘控制的背景下寻找 **[**Spring**](../术语速查手册.md#spring)**。**
+**严禁在卖盘控制的背景下寻找 ****Spring****。**
 
 ### 1. 需求匮乏的熊市案例 (图 4-8, 4-9)
 
 ![图 4-8：熊市中的 Spring 假象](../wyckoff_content/OEBPS/Image00087.jpg)
 
-- **现象**：蜡烛 1 突破支撑，看似是不错的缩量[Spring](../术语速查手册.md#spring)。
+- **现象**：蜡烛 1 突破支撑，看似是不错的缩量Spring。
 - **风险**：大背景是熊市，反弹极低成交量说明无需求。
 
 ![图 4-9：熊市 Spring 失败后果](../wyckoff_content/OEBPS/Image00088.jpg)
@@ -75,7 +75,7 @@ graph TD
 
 ## 四、派发前奏与 BC(抢购高潮)(图 4-11, 4-12)
 
-[Spring](../术语速查手册.md#spring)有时也出现在派发早期的震荡中。
+Spring有时也出现在派发早期的震荡中。
 
 ![图 4-11：急涨与 BC(抢购高潮)诊断](../wyckoff_content/OEBPS/Image00090.jpg)
 
@@ -83,7 +83,7 @@ graph TD
 
 ![图 4-12：小区间内的 Spring](../wyckoff_content/OEBPS/Image00091.jpg)
 
-- **特征**：收盘价相近的小区间通常通过[Spring](../术语速查手册.md#spring)或[UT](../术语速查手册.md#ut-upthrust)（上冲回落）结束并开启大行情。
+- **特征**：收盘价相近的小区间通常通过Spring或[UT](../术语速查手册.md#ut-upthrust)（上冲回落）结束并开启大行情。
 
 ---
 
@@ -91,7 +91,7 @@ graph TD
 
 震仓是发生在吸筹阶段末端的“特大号
 
-[Spring](../术语速查手册.md#spring)”。
+Spring”。
 
 ### 1. 震仓的实战意义 (图 4-21)
 
