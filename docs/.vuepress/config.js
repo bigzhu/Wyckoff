@@ -63,15 +63,23 @@ const getSidebar = () => {
     }
   }
 
+  // 1.5 实用工具
+  if (fs.existsSync(path.join(docsDir, '工具.md'))) {
+    sidebar.push({
+      text: '实用工具',
+      children: ['/工具.md']
+    });
+  }
+
   // 2. 后记
   if (fs.existsSync(path.join(docsDir, '后记_交易哲学与实战心得.md'))) {
     sidebar.push('/后记_交易哲学与实战心得.md');
   }
 
-  // 获取根目录下的 markdown 文件（排除 README, get-started, 前言, 后记）
+  // 获取根目录下的 markdown 文件（排除 README, get-started, 前言, 后记, 工具）
   const rootFiles = fs.readdirSync(docsDir).filter(f => {
     return f.endsWith('.md') &&
-      !['README.md', 'get-started.md', '前言.md', '后记_交易哲学与实战心得.md'].includes(f);
+      !['README.md', 'get-started.md', '前言.md', '后记_交易哲学与实战心得.md', '工具.md'].includes(f);
   });
 
   if (rootFiles.length > 0) {
