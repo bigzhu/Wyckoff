@@ -7,14 +7,16 @@
 SYMBOL="ADAUSDC"
 INTERVAL="4h"
 DAYS=0
+HISTORY=400
 
 # 解析参数
 if [ "$1" ]; then SYMBOL=$1; fi
 if [ "$2" ]; then INTERVAL=$2; fi
 if [ "$3" ]; then DAYS=$3; fi
+if [ "$4" ]; then HISTORY=$4; fi
 
 echo "🚀 开始执行自动化分析流程..."
-echo "📊 交易对: $SYMBOL | 周期: $INTERVAL | 范围: ${DAYS}天 (0=全部)"
+echo "📊 交易对: $SYMBOL | 周期: $INTERVAL | 范围: ${DAYS}天 (0=全部) | AI 历史: ${HISTORY}条"
 
 # 1. 获取数据 (使用 binance_data_pro.py)
 echo "----------------------------------------"
@@ -75,7 +77,7 @@ if [ $? -eq 0 ]; then
         # 回到项目根目录执行，因为 ai_analyze.py 内部逻辑依赖相对路径找 .env
         cd ../../../.. || exit
         
-        python3 docs/指标工具箱/AI/ai_analyze.py "$TARGET_DIR/$CSV_FILE"
+        python3 docs/指标工具箱/AI/ai_analyze.py "$TARGET_DIR/$CSV_FILE" --history $HISTORY
         
         if [ $? -eq 0 ]; then
             echo "✅ AI 分析完成！报告已更新。"

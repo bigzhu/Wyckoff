@@ -89,6 +89,7 @@ def get_ai_analysis(system_prompt, data_context):
 def main():
     parser = argparse.ArgumentParser(description='使用 Gemini AI 分析威科夫行情')
     parser.add_argument('csv_path', help='清洗后的 CSV 数据路径')
+    parser.add_argument('--history', type=int, default=400, help='提交给 AI 的历史 K 线行数 (默认 400)')
     args = parser.parse_args()
     
     csv_path = args.csv_path
@@ -110,18 +111,15 @@ def main():
         system_prompt = "请对以下威科夫行情数据进行专业分析，识别 SC, AR, ST 等关键事件。"
 
     # 2. 准备数据
-    # [优化] 读取最后 100 行 (大幅减少 Token 消耗，避免 429)
-    # Gemini Free Tier limit is strict on RPM and TPM.
     df = pd.read_csv(csv_path)
-    
-    # 获取基本信息
     base_name = os.path.splitext(os.path.basename(csv_path))[0].replace("_Cleaned", "")
-    
+
     # 截取数据
-    recent_data = df.tail(100).to_csv(index=False)
+    # [优化] 根据 --history 参数截取数据 (默认从 100 增加到 400，以匹配图表视野)
+    recent_data = df.tail(args.history).to_csv(index=False)
     
     print(f"🧠 正调用 Google Gemini ({MODEL_NAME}) 进行深度分析...")
-    print(f"📄 分析对象: {base_name} (数据长度: {len(df)} -> 提交最近 100 行)")
+    print(f"📄 分析对象: {base_name} (数据长度: {len(df)} -> 提交最近 {args.history} 行)")
 
     analysis_text = get_ai_analysis(system_prompt, recent_data)
     
