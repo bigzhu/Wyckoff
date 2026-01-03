@@ -3,7 +3,6 @@ import zipfile
 import io
 import pandas as pd
 import os
-import numpy as np
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -13,10 +12,12 @@ def get_config():
     default_interval = "1d"
     
     symbol = input(f"请输入交易对 (默认 {default_symbol}): ").strip().upper()
-    if not symbol: symbol = default_symbol
+    if not symbol:
+        symbol = default_symbol
     
     interval = input(f"请输入时间周期 (默认 {default_interval}): ").strip().lower()
-    if not interval: interval = default_interval
+    if not interval:
+        interval = default_interval
     
     print(f"✅ 已确认: {symbol} | {interval}")
     return symbol, interval
@@ -50,7 +51,7 @@ def get_data_for_day(date_str):
                     # on_bad_lines='skip' 防止某行数据列数不对
                     df = pd.read_csv(f, header=None, names=COLUMNS, dtype=str, on_bad_lines='skip')
                     return df, "Local"
-        except:
+        except Exception:
             pass 
 
     # 2. 本地不存在则下载
@@ -64,7 +65,7 @@ def get_data_for_day(date_str):
                 with z.open(z.namelist()[0]) as f:
                     return pd.read_csv(f, header=None, names=COLUMNS, dtype=str, on_bad_lines='skip'), "Download"
         return None, "Missing"
-    except:
+    except Exception:
         return None, "Error"
 
 def main():
@@ -72,13 +73,14 @@ def main():
                  for i in range((END_DATE - START_DATE).days + 1) ]
 
     all_dfs = []
-    print(f"🚀 启动 | 合并处理中...")
+    print("🚀 启动 | 合并处理中...")
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         future_to_date = {executor.submit(get_data_for_day, d): d for d in date_list}
         for i, future in enumerate(as_completed(future_to_date), 1):
             df, source = future.result()
-            if df is not None: all_dfs.append(df)
+            if df is not None:
+                all_dfs.append(df)
             print(f"\r进度: [{i}/{len(date_list)}] 处理源: {source:<10}", end="", flush=True)
 
     if not all_dfs:
@@ -119,7 +121,7 @@ def main():
 
     output_name = f"{SYMBOL}_{INTERVAL}_Cleaned.csv"
     final_df.to_csv(output_name, index=False)
-    print(f"\n✅ 成功！数据已清洗。")
+    print("\n✅ 成功！数据已清洗。")
     print(f"📊 最终行数: {len(final_df)} | 文件: {output_name}")
 
 if __name__ == "__main__":
