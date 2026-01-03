@@ -39,7 +39,8 @@ const getSidebar = () => {
   const items = fs.readdirSync(docsDir).filter(item => {
     return fs.statSync(path.join(docsDir, item)).isDirectory() &&
       !item.startsWith('.') &&
-      !item.startsWith('wyckoff_content');
+      !item.startsWith('wyckoff_content') &&
+      item !== '指标工具箱';
   });
 
   // 对章节目录进行排序
@@ -63,12 +64,25 @@ const getSidebar = () => {
     }
   }
 
-  // 1.5 实用工具
-  if (fs.existsSync(path.join(docsDir, '工具.md'))) {
-    sidebar.push({
-      text: '实用工具',
-      children: ['/工具.md']
-    });
+  // 1.5 指标工具箱
+  const toolboxDir = path.join(docsDir, '指标工具箱');
+  if (fs.existsSync(toolboxDir)) {
+    const tools = [];
+    const dirs = fs.readdirSync(toolboxDir).filter(f => fs.statSync(path.join(toolboxDir, f)).isDirectory());
+
+    for (const dir of dirs) {
+      if (fs.existsSync(path.join(toolboxDir, dir, '使用说明.md'))) {
+        tools.push(`/指标工具箱/${dir}/使用说明.md`);
+      }
+    }
+
+    if (tools.length > 0) {
+      sidebar.push({
+        text: '指标工具箱',
+        collapsible: true,
+        children: tools
+      });
+    }
   }
 
   // 2. 后记
