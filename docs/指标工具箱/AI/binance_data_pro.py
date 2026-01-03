@@ -14,19 +14,27 @@ def get_config():
     parser = argparse.ArgumentParser(description='Binance K线数据获取工具 (使用 Data API)')
     parser.add_argument('symbol', nargs='?', default=default_symbol, help=f'交易对 (默认: {default_symbol})')
     parser.add_argument('interval', nargs='?', default=default_interval, help=f'时间周期 (默认: {default_interval})')
+    # [新增] 支持 --days 参数
+    parser.add_argument('--days', type=int, default=0, help='从最近 N 天前开始拉取 (默认 0 表示从 2024-01-01 开始)')
     
     args = parser.parse_args()
     
     symbol = args.symbol.upper()
     interval = args.interval.lower()
     
-    print(f"✅ 已确认: {symbol} | {interval}")
-    return symbol, interval
+    # 计算起始时间
+    if args.days > 0:
+        start_date = datetime.now() - timedelta(days=args.days)
+        start_ts = int(start_date.timestamp() * 1000)
+    else:
+        # 默认 2024-01-01
+        start_ts = int(datetime(2024, 1, 1).timestamp() * 1000)
+    
+    print(f"✅ 已确认: {symbol} | {interval} | 起始时间: {datetime.fromtimestamp(start_ts/1000)}")
+    return symbol, interval, start_ts
 
-SYMBOL, INTERVAL = get_config()
+SYMBOL, INTERVAL, START_TIME = get_config()
 
-# 2024-01-01 起始
-START_TIME = int(datetime(2024, 1, 1).timestamp() * 1000)
 # 使用 data-api.binance.vision 替代 api.binance.com 以绕过地区限制
 BASE_URL = "https://data-api.binance.vision/api/v3/klines"
 
