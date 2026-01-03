@@ -8,8 +8,20 @@ from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ================= 配置区 =================
-SYMBOL = "ADAUSDC"
-INTERVAL = "1d"
+def get_config():
+    default_symbol = "ADAUSDC"
+    default_interval = "1d"
+    
+    symbol = input(f"请输入交易对 (默认 {default_symbol}): ").strip().upper()
+    if not symbol: symbol = default_symbol
+    
+    interval = input(f"请输入时间周期 (默认 {default_interval}): ").strip().lower()
+    if not interval: interval = default_interval
+    
+    print(f"✅ 已确认: {symbol} | {interval}")
+    return symbol, interval
+
+SYMBOL, INTERVAL = get_config()
 START_DATE = datetime(2024, 1, 1) 
 END_DATE = datetime.now() - timedelta(days=1)
 MAX_WORKERS = 20
