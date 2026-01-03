@@ -3,18 +3,22 @@ import pandas as pd
 import time
 from datetime import datetime, timedelta
 
+import argparse
+import sys
+
 # ================= 配置区 =================
 def get_config():
     default_symbol = "ADAUSDC"
-    default_interval = "4h"  # 默认 4h 方便测试
+    default_interval = "4h"
     
-    symbol = input(f"请输入交易对 (默认 {default_symbol}): ").strip().upper()
-    if not symbol:
-        symbol = default_symbol
+    parser = argparse.ArgumentParser(description='Binance K线数据获取工具 (使用 Data API)')
+    parser.add_argument('symbol', nargs='?', default=default_symbol, help=f'交易对 (默认: {default_symbol})')
+    parser.add_argument('interval', nargs='?', default=default_interval, help=f'时间周期 (默认: {default_interval})')
     
-    interval = input(f"请输入时间周期 (默认 {default_interval}): ").strip().lower()
-    if not interval:
-        interval = default_interval
+    args = parser.parse_args()
+    
+    symbol = args.symbol.upper()
+    interval = args.interval.lower()
     
     print(f"✅ 已确认: {symbol} | {interval}")
     return symbol, interval
