@@ -63,6 +63,30 @@ if [ $? -eq 0 ]; then
     echo "✅ 自动化分析流程完成！"
     echo "📄 查看报告: $OUTPUT_DIR/${SYMBOL}_${INTERVAL}_Wyckoff_Analysis.md"
     echo "🖼️ 查看图表: $OUTPUT_DIR/${SYMBOL}_${INTERVAL}_Wyckoff_Chart.png"
+    
+    # 4. 执行 AI 深度分析 (如果配置了 API)
+    # 检查项目根目录下的 .env 是否存在且有 KEY
+    # 当前目录是 docs/指标工具箱/AI/output, 根目录是 ../../../..
+    ROOT_ENV="../../../../.env"
+    
+    if [ -f "$ROOT_ENV" ] && grep -q "GOOGLE_API_KEY" "$ROOT_ENV"; then
+        echo "----------------------------------------"
+        echo "🧠 步骤 4: 调用 Gemini AI 生成深度分析报告..."
+        # 回到项目根目录执行，因为 ai_analyze.py 内部逻辑依赖相对路径找 .env
+        cd ../../../.. || exit
+        
+        python3 docs/指标工具箱/AI/ai_analyze.py "$TARGET_DIR/$CSV_FILE"
+        
+        if [ $? -eq 0 ]; then
+            echo "✅ AI 分析完成！报告已更新。"
+        else
+            echo "⚠️ AI 分析失败，保留模板报告。"
+        fi
+    else
+        echo "----------------------------------------"
+        echo "ℹ️ 未检测到 GOOGLE_API_KEY，跳过 AI 深度分析 (保留模板报告)。"
+    fi
+
 else
     echo "❌ 分析脚本执行失败。"
     exit 1
