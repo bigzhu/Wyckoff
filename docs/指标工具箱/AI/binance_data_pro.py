@@ -94,6 +94,14 @@ def main():
     # 1. 转换为数字，非法字符变 NaN
     final_df['Open_time'] = pd.to_numeric(final_df['Open_time'], errors='coerce')
     
+    # [新增] 自动修复毫秒/微秒混合问题
+    # Binance 2025年后的数据可能是微秒 (16位)，而老数据是毫秒 (13位)
+    # 1e14 毫秒大约是公元 5138 年，所以 > 1e14 的必然是微秒
+    mask_us = final_df['Open_time'] > 1e14
+    if mask_us.any():
+        print(f"⚠️ 检测到 {mask_us.sum()} 行微秒数据，正在标准化...")
+        final_df.loc[mask_us, 'Open_time'] = final_df.loc[mask_us, 'Open_time'] / 1000
+
     # 2. 核心：过滤掉异常的时间戳数值
     # 正常 2024-2026 年的毫秒时间戳应该在 1.7e12 到 1.8e12 之间
     # 我们设定一个合理的阈值：1,500,000,000,000 到 2,000,000,000,000

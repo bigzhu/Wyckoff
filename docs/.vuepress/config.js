@@ -71,8 +71,20 @@ const getSidebar = () => {
     const dirs = fs.readdirSync(toolboxDir).filter(f => fs.statSync(path.join(toolboxDir, f)).isDirectory());
 
     for (const dir of dirs) {
+      // 1. 常规指标的使用说明
       if (fs.existsSync(path.join(toolboxDir, dir, '使用说明.md'))) {
         tools.push(`/指标工具箱/${dir}/使用说明.md`);
+      }
+
+      // 2. AI 分析报告 (特例处理)
+      if (dir === 'AI') {
+        const aiOutputDir = path.join(toolboxDir, dir, 'output');
+        if (fs.existsSync(aiOutputDir)) {
+          const reports = fs.readdirSync(aiOutputDir)
+            .filter(f => f.endsWith('_Analysis.md'))
+            .map(f => `/指标工具箱/${dir}/output/${f}`);
+          tools.push(...reports);
+        }
       }
     }
 
