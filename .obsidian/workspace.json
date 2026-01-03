@@ -185,10 +185,16 @@
   },
   "active": "23abbde731146831",
   "lastOpenFiles": [
+    "ADAUSDC_1m_Cleaned.csv",
+    "ADAUSDC_15m_Cleaned.csv",
+    "docs/指标工具箱/AI/ai_analyze.py",
+    "docs/指标工具箱/AI/output/ADAUSDC_15m_Wyckoff_Analysis.md",
+    "docs/指标工具箱/AI/output/ADAUSDC_15m_Wyckoff_Chart.png",
+    "docs/指标工具箱/AI/ADAUSDC_15m_Cleaned.csv",
+    "run_wyckoff.sh",
     "docs/指标工具箱/AI/output/ADAUSDC_1m_Wyckoff_Analysis.md",
     "docs/指标工具箱/AI/output/ADAUSDC_1m_Wyckoff_Chart.png",
     "docs/指标工具箱/AI/ADAUSDC_1m_Cleaned.csv",
-    "ADAUSDC_1m_Cleaned.csv",
     "ADAUSDC_4h_Cleaned.csv",
     "ADAUSDC_1d_Cleaned.csv",
     "debug_sidebar.js",
@@ -196,9 +202,6 @@
     "docs/指标工具箱/AI/output/ADAUSDC_1d_Wyckoff_Chart.png",
     "docs/指标工具箱/AI/ADAUSDC_1d_Cleaned.csv",
     "binance_data_cache/ADAUSDC-1d-2025-12-08.zip",
-    "binance_data_cache/ADAUSDC-1d-2025-12-23.zip",
-    "binance_data_cache/ADAUSDC-1d-2026-01-01.zip",
-    "binance_data_cache/ADAUSDC-1d-2026-01-02.zip",
     "docs/指标工具箱/AI/output/ADAUSDC_4h_Wyckoff_Analysis.md",
     "docs/指标工具箱/AI/output/ADAUSDC_4h_Wyckoff_Chart.png",
     "docs/指标工具箱/AI/output/ADAUSDC_Wyckoff_Analysis.md",
@@ -223,13 +226,10 @@
     "docs/第四章_弹簧效应_Spring_交易法/第四节_使用Spring_应该注意以下几点.md",
     "docs/第四章_弹簧效应_Spring_交易法/第三节_Spring案例.md",
     "docs/第四章_弹簧效应_Spring_交易法/第二节_Spring的位置和种类.md",
-    "docs/第四章_弹簧效应_Spring_交易法/第一节_什么是Spring.md",
-    "docs/第四章_弹簧效应_Spring_交易法/README.md",
     "docs/wyckoff_content/OEBPS/Image00164.jpg",
     "docs/wyckoff_content/OEBPS/Image00162.jpg",
     "docs/wyckoff_content/OEBPS/Image00161.jpg",
     "docs/wyckoff_content/OEBPS/Image00160.jpg",
-    "docs/wyckoff_content/OEBPS/Image00159.jpg",
-    "docs/wyckoff_content/OEBPS/Image00158.jpg"
+    "docs/wyckoff_content/OEBPS/Image00159.jpg"
   ]
 }
