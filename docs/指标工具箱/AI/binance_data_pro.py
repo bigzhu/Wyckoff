@@ -1,15 +1,12 @@
 import requests
-import zipfile
-import io
 import pandas as pd
-import os
+import time
 from datetime import datetime, timedelta
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ================= 配置区 =================
 def get_config():
     default_symbol = "ADAUSDC"
-    default_interval = "1d"
+    default_interval = "4h"  # 默认 4h 方便测试
     
     symbol = input(f"请输入交易对 (默认 {default_symbol}): ").strip().upper()
     if not symbol:
@@ -23,114 +20,105 @@ def get_config():
     return symbol, interval
 
 SYMBOL, INTERVAL = get_config()
-START_DATE = datetime(2024, 1, 1) 
-END_DATE = datetime.now() - timedelta(days=1)
-MAX_WORKERS = 20
-CACHE_DIR = "binance_data_cache"
 
-BASE_URL = f"https://data.binance.vision/data/spot/daily/klines/{SYMBOL}/{INTERVAL}"
+# 2024-01-01 起始
+START_TIME = int(datetime(2024, 1, 1).timestamp() * 1000)
+# 使用 data-api.binance.vision 替代 api.binance.com 以绕过地区限制
+BASE_URL = "https://data-api.binance.vision/api/v3/klines"
+
 COLUMNS = [
     "Open_time", "Open", "High", "Low", "Close", "Volume",
     "Close_time", "Quote_asset_volume", "Number_of_trades",
     "Taker_buy_base_asset_volume", "Taker_buy_quote_asset_volume", "Ignore"
 ]
-# ==========================================
 
-if not os.path.exists(CACHE_DIR):
-    os.makedirs(CACHE_DIR)
-
-def get_data_for_day(date_str):
-    file_name = f"{SYMBOL}-{INTERVAL}-{date_str}.zip"
-    local_path = os.path.join(CACHE_DIR, file_name)
+def fetch_all_data(symbol, interval, start_ts):
+    """
+    通过 Binance API 分页拉取所有历史数据直到最新
+    """
+    all_data = []
+    current_start = start_ts
     
-    # 1. 尝试本地加载
-    if os.path.exists(local_path):
+    print(f"🚀 开始从 API 拉取数据 (起始: {datetime.fromtimestamp(start_ts/1000)}) ...")
+    
+    while True:
+        params = {
+            "symbol": symbol,
+            "interval": interval,
+            "startTime": current_start,
+            "limit": 1000  # API 最大限制
+        }
+        
         try:
-            with zipfile.ZipFile(local_path) as z:
-                with z.open(z.namelist()[0]) as f:
-                    # on_bad_lines='skip' 防止某行数据列数不对
-                    df = pd.read_csv(f, header=None, names=COLUMNS, dtype=str, on_bad_lines='skip')
-                    return df, "Local"
-        except Exception:
-            pass 
-
-    # 2. 本地不存在则下载
-    url = f"{BASE_URL}/{file_name}"
-    try:
-        response = requests.get(url, timeout=10)
-        if response.status_code == 200:
-            with open(local_path, 'wb') as f_out:
-                f_out.write(response.content)
-            with zipfile.ZipFile(io.BytesIO(response.content)) as z:
-                with z.open(z.namelist()[0]) as f:
-                    return pd.read_csv(f, header=None, names=COLUMNS, dtype=str, on_bad_lines='skip'), "Download"
-        return None, "Missing"
-    except Exception:
-        return None, "Error"
+            response = requests.get(BASE_URL, params=params, timeout=10)
+            if response.status_code != 200:
+                print(f"❌ API 请求失败: {response.text}")
+                break
+            
+            data = response.json()
+            if not data:
+                print("⚠️ 没有更多数据了。")
+                break
+                
+            all_data.extend(data)
+            
+            # 打印进度
+            last_ts = data[-1][0]
+            last_date = datetime.fromtimestamp(last_ts/1000)
+            print(f"\r📥 已拉取至: {last_date} (总 K 线数: {len(all_data)})", end="", flush=True)
+            
+            # 更新下一次请求的起始时间 (最后一根 K 线开盘时间 + 1ms 防止重复? 或者直接取 Close_time + 1? )
+            # 实际上取最后一根 Open_time + 1ms 依然会包含这根还是？Binance API 文档建议 startTime。
+            # 简单做法：取最后一根的 close_time + 1
+            current_start = data[-1][6] + 1
+            
+            # 如果拉取数量少于 Limit，说明已经是最新的了
+            if len(data) < 1000:
+                print("\n✅ 数据拉取完毕。")
+                break
+                
+            # 稍微休眠防止触发极端频控 (虽然后台限制是 1200权重/分，单次 K 线权重仅为 2)
+            time.sleep(0.1)
+            
+        except Exception as e:
+            print(f"\n❌ 网络或解析错误: {e}")
+            break
+            
+    return all_data
 
 def main():
-    date_list = [ (START_DATE + timedelta(days=i)).strftime("%Y-%m-%d") 
-                 for i in range((END_DATE - START_DATE).days + 1) ]
-
-    all_dfs = []
-    print("🚀 启动 | 合并处理中...")
-
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        future_to_date = {executor.submit(get_data_for_day, d): d for d in date_list}
-        for i, future in enumerate(as_completed(future_to_date), 1):
-            df, source = future.result()
-            if df is not None:
-                all_dfs.append(df)
-            print(f"\r进度: [{i}/{len(date_list)}] 处理源: {source:<10}", end="", flush=True)
-
-    if not all_dfs:
-        print("\n❌ 未能获取数据。")
+    raw_data = fetch_all_data(SYMBOL, INTERVAL, START_TIME)
+    
+    if not raw_data:
+        print("❌ 未获取到任何数据")
         return
 
-    print("\n📥 正在执行深度数据清洗...")
-    final_df = pd.concat(all_dfs, ignore_index=True)
-
-    # --- 关键清洗步骤 ---
-    # 1. 转换为数字，非法字符变 NaN
-    final_df['Open_time'] = pd.to_numeric(final_df['Open_time'], errors='coerce')
+    print("\n🧹 正在清洗数据...")
+    df = pd.DataFrame(raw_data, columns=COLUMNS)
     
-    # [新增] 自动修复毫秒/微秒混合问题
-    # Binance 2025年后的数据可能是微秒 (16位)，而老数据是毫秒 (13位)
-    # 1e14 毫秒大约是公元 5138 年，所以 > 1e14 的必然是微秒
-    mask_us = final_df['Open_time'] > 1e14
-    if mask_us.any():
-        print(f"⚠️ 检测到 {mask_us.sum()} 行微秒数据，正在标准化...")
-        final_df.loc[mask_us, 'Open_time'] = final_df.loc[mask_us, 'Open_time'] / 1000
-
-    # 2. 核心：过滤掉异常的时间戳数值
-    # 正常 2024-2026 年的毫秒时间戳应该在 1.7e12 到 1.8e12 之间
-    # 我们设定一个合理的阈值：1,500,000,000,000 到 2,000,000,000,000
-    valid_mask = (final_df['Open_time'] > 1500000000000) & (final_df['Open_time'] < 2000000000000)
-    final_df = final_df[valid_mask].copy()
+    # --- 数据清洗与格式化 ---
     
-    # 3. 排序
-    final_df = final_df.sort_values('Open_time').drop_duplicates(subset=['Open_time'])
-
-    # 4. 安全转换日期
-    try:
-        # unit='ms' 配合已经过滤过的数值，绝不会再报 OutOfBounds
-        final_df['Human_Time'] = pd.to_datetime(final_df['Open_time'], unit='ms') + timedelta(hours=8)
+    # 1. 类型转换
+    numeric_cols = ["Open", "High", "Low", "Close", "Volume", "Open_time"]
+    for col in numeric_cols:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
         
-        # 转换价格列为浮点数，方便后续分析
-        price_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
-        for col in price_cols:
-            final_df[col] = pd.to_numeric(final_df[col], errors='coerce')
-
-        # 整理列顺序
-        cols = ['Human_Time'] + [c for c in final_df.columns if c != 'Human_Time']
-        final_df = final_df[cols]
-    except Exception as e:
-        print(f"\n⚠️ 日期转换警告 (已跳过转换): {e}")
-
+    # 2. 增加人类可读时间 (UTC+8)
+    df['Human_Time'] = pd.to_datetime(df['Open_time'], unit='ms') + timedelta(hours=8)
+    
+    # 3. 整理列顺序
+    final_cols = ['Human_Time', 'Open_time', 'Open', 'High', 'Low', 'Close', 'Volume', 
+                  'Close_time', 'Quote_asset_volume', 'Number_of_trades', 
+                  'Taker_buy_base_asset_volume', 'Taker_buy_quote_asset_volume', 'Ignore']
+    df = df[final_cols]
+    
+    # 4. 保存
     output_name = f"{SYMBOL}_{INTERVAL}_Cleaned.csv"
-    final_df.to_csv(output_name, index=False)
-    print("\n✅ 成功！数据已清洗。")
-    print(f"📊 最终行数: {len(final_df)} | 文件: {output_name}")
+    df.to_csv(output_name, index=False)
+    
+    print(f"✅ 成功保存: {output_name}")
+    print(f"📊 数据范围: {df['Human_Time'].iloc[0]} 至 {df['Human_Time'].iloc[-1]}")
+    print(f"📈 总行数: {len(df)}")
 
 if __name__ == "__main__":
     main()
