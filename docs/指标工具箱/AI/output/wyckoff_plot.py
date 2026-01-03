@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import os
 import platform
+import argparse
+import sys
 
 # --- 1. 配置中文显示 ---
 def configure_font():
@@ -34,12 +36,8 @@ def configure_font():
 
 font_prop = configure_font()
 
-import argparse
-import sys
-
-# --- 2. 读取数据 (动态路径) ---
-# 使用 argparse 解析命令行参数
-parser = argparse.ArgumentParser(description='绘制威科夫分析图')
+# --- 2. 参数解析 & 数据读取 ---
+parser = argparse.ArgumentParser(description='绘制威科夫分析图 (Master Mode)')
 parser.add_argument('input_csv', nargs='?', default="../ADAUSDC_4h_Cleaned.csv", help='输入的 CSV 文件路径')
 args = parser.parse_args()
 
@@ -48,213 +46,190 @@ if not os.path.exists(file_path):
     print(f"❌ 错误: 找不到文件 {file_path}")
     sys.exit(1)
 
-# 生成输出文件名基础 (从输入文件名中提取)
-# 例如: ../ADAUSDC_4h_Cleaned.csv -> ADAUSDC_4h
 base_name = os.path.splitext(os.path.basename(file_path))[0].replace("_Cleaned", "")
 print(f"📖 读取数据: {file_path}")
 df = pd.read_csv(file_path)
 
-# 转换时间索引
 df['Date'] = pd.to_datetime(df['Human_Time'])
 df.set_index('Date', inplace=True)
 
-# 确保数值类型
-cols = ['Open', 'High', 'Low', 'Close', 'Volume']
-for c in cols:
+for c in ['Open', 'High', 'Low', 'Close', 'Volume']:
     df[c] = pd.to_numeric(df[c], errors='coerce')
 
-# --- 3. 威科夫结构分析 (启发式/模拟) ---
-# 注意：作为脚本，这里主要负责“绘图”，真正的智能分析应由LLM完成。
-# 但为了演示效果，这里选取最近一段明显的行情进行标注。
-# 假设我们关注最近的下跌趋势和潜在的恐慌抛售(SC)
+# --- 3. 结构分析 (优化后的启发式逻辑) ---
+# 截取最近 400 根 K 线以获得更清晰的视觉重点
+plot_df = df.tail(400).copy()
 
-# --- 3. 威科夫结构分析 (模拟 AI 分析结果) ---
-# 目标：展示从 2025 年末的高点以来的下跌趋势，以及当前的吸筹结构
-# 逻辑：
-# 1. 2024年12月-2025年初: 潜在的派发顶部 (Buying Climax / UT)
-# 2. 2026年1月: 恐慌抛售 (SC)
-
-# 截取最近 1000 根 K 线 (约 5 个月) 以展示完整结构
-# 4h 线：1000 根 ≈ 166 天，涵盖 2025年8月至今
-plot_df = df.tail(1000).copy()
-
-# A. 寻找区间内的最高点 (潜在的 BC/UT)
+# A. 趋势顶点 (BC/UTAD)
 max_idx = plot_df['High'].idxmax()
 bc_price = plot_df.loc[max_idx, 'High']
 
-# B. 寻找区间内的最低点 (SC)
+# B. 趋势底点 (SC/Spring)
 min_idx = plot_df['Low'].idxmin()
 sc_price = plot_df.loc[min_idx, 'Low']
 
-# C. 寻找 SC 后的 AR
+# C. TR 范围预测
 after_sc = plot_df[plot_df.index > min_idx]
-ar_price = sc_price * 1.15 # 默认
-ar_idx = plot_df.index[-1]
 if not after_sc.empty:
     ar_idx_real = after_sc['High'].idxmax()
-    ar_price = after_sc.loc[ar_idx_real, 'High']
-    tr_top = ar_price
+    tr_top = after_sc.loc[ar_idx_real, 'High']
     tr_bottom = sc_price
 else:
-    tr_top = ar_price
+    tr_top = bc_price * 0.98
     tr_bottom = sc_price
+    ar_idx_real = plot_df.index[-1]
 
-# --- 4. 绘图 ---
-msg = f"威科夫全景分析图 ({base_name.replace('_', ' ')})"
-print(f"🎨 正在绘制: {msg}")
+# --- 4. 绘图 (Master Level 暗色风格) ---
+print(f"🎨 正在绘制 Master 风格全景图...")
 
-# 设置 mplfinance 风格
-s = mpf.make_mpf_style(base_mpf_style='yahoo', rc={
-    'font.family': 'SimHei' if os.name == 'nt' else 'Arial Unicode MS',
-    'font.size': 12
-})
+# 定义专业颜色
+COLOR_TR_BOX = '#263238' # 深蓝灰背景
+COLOR_GOLD = '#FFD700'   # 金色 (上沿)
+COLOR_AZURE = '#00BFFF'  # 天蓝色 (下沿)
+COLOR_TEXT = '#FFFFFF'
+COLOR_GRID = '#37474F'
 
-# 准备标注点
+# 自定义 mplfinance 风格 (基于 nightclouds 但更极致)
+s = mpf.make_mpf_style(
+    base_mpf_style='nightclouds',
+    gridcolor=COLOR_GRID,
+    facecolor='#121212', # 纯黑背景
+    edgecolor='#333333',
+    figcolor='#121212',
+    y_on_right=True,
+    marketcolors=mpf.make_marketcolors(
+        up='#00c853', down='#ff5252',
+        inherit=True
+    )
+)
+
+# 标注列表 (时间, 价格, 标签, 偏移方向, 颜色)
+# 偏移方向: 1 为上方, -1 为下方
 annotations = [
-    (max_idx, bc_price, "BC/UT\n抢购高潮/上冲"),
-    (min_idx, sc_price, "SC\n恐慌抛售"),
+    (max_idx, bc_price, "BC/UTAD", 1, COLOR_GOLD),
+    (min_idx, sc_price, "SC/SPRING", -1, COLOR_AZURE),
 ]
 if not after_sc.empty:
-    annotations.append((ar_idx_real, ar_price, "AR\n自动反弹"))
+    annotations.append((ar_idx_real, tr_top, "AR/LPSY", 1, COLOR_TEXT))
 
-# 简单识别中间的 SOW (弱势信号): 高点下移过程中的显著长阴
-# 这里简单取高点到低点中间某处的大阴线示意
-mid_df = plot_df[(plot_df.index > max_idx) & (plot_df.index < min_idx)]
-if not mid_df.empty:
-    # 找跌幅最大的一根
-    sow_idx = (mid_df['Close'] - mid_df['Open']).idxmin()
-    sow_price = mid_df.loc[sow_idx, 'Low']
-    annotations.append((sow_idx, sow_price, "SOW\n弱势信号"))
-
-# 构造绘图
-t_start = min_idx # TR 开始于 SC
-t_end = plot_df.index[-1]
-
-# 绘图配置
+# 绘图调用
 fig, axes = mpf.plot(
     plot_df,
     type='candle',
     volume=True,
-    title=msg,
+    title=f"\nWYCKOFF MASTER ANALYSIS: {base_name.replace('_', ' ')}",
     style=s,
     returnfig=True,
-    figsize=(24, 12), 
-    panel_ratios=(6, 2),
-    tight_layout=True, # 必须配合非紧缩 bbox
-    
-    # 绘制 TR (仅针对底部吸筹区)
-    hlines=dict(hlines=[tr_top, tr_bottom], colors=['red', 'green'], linestyle='-.', linewidths=2),
-    
-    # 简单绘制下跌趋势线 (连接 BC 和 中间某个高点) 示意
-    # alines=... (暂略，避免坐标转换复杂问题)
+    figsize=(20, 10),
+    panel_ratios=(1, 0.3),
+    tight_layout=True,
+    hlines=dict(hlines=[tr_top, tr_bottom], colors=[COLOR_GOLD, COLOR_AZURE], linestyle='--', linewidths=1.5, alpha=0.6)
 )
 
-# 获取 ax 对象
 ax_main = axes[0]
+ax_vol = axes[2]
 
-# 辅助函数：获取日期对应的整数坐标
+# --- 5. 装饰图表 ---
+
+# 1. 绘制 TR 阴影背景
 def get_x_loc(timestamp):
-    try:
-        return plot_df.index.get_loc(timestamp)
-    except KeyError:
-        return 0
+    try: return plot_df.index.get_loc(timestamp)
+    except: return 0
 
-# 绘制吸筹区矩形 (半透明)
-x_start_idx = get_x_loc(t_start)
-x_end_idx = len(plot_df) - 1
-
-rect = plt.Rectangle((x_start_idx, tr_bottom), x_end_idx - x_start_idx, tr_top - tr_bottom, 
-                     facecolor='green', alpha=0.1, edgecolor='none')
+x_start = get_x_loc(min_idx)
+x_end = len(plot_df) - 1
+rect = plt.Rectangle((x_start, tr_bottom), x_end - x_start, tr_top - tr_bottom, 
+                     facecolor='#FFD700', alpha=0.08, edgecolor='none', zorder=0)
 ax_main.add_patch(rect)
 
-# 添加文字标注
-for date, price, label in annotations:
-    # [修复] 将日期转换为对应的整数 X 坐标
+# 2. 绘制智能文字标注
+for date, price, label, direction, color in annotations:
     x_idx = get_x_loc(date)
+    offset = (plot_df['High'].max() - plot_df['Low'].min()) * 0.05 * direction
     
     ax_main.annotate(
-        label, 
-        xy=(x_idx, price), 
-        xytext=(x_idx, price * 0.95), # 文字在下方
-        arrowprops=dict(facecolor='black', arrowstyle='->', lw=1.5),
-        fontsize=14, # 加大字体
-        color='red',
-        fontproperties=font_prop,
+        label,
+        xy=(x_idx, price),
+        xytext=(x_idx, price + offset),
+        arrowprops=dict(arrowstyle='->', color=color, lw=1.2, alpha=0.8),
+        fontsize=11,
+        color=color,
         fontweight='bold',
-        ha='center', # 水平居中
-        bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="red", alpha=0.8) # 增加背景框确保清晰
+        ha='center',
+        va='bottom' if direction > 0 else 'top',
+        bbox=dict(boxstyle="round,pad=0.2", fc="#1A1A1A", ec=color, alpha=0.9, lw=1)
     )
 
-# 标注 Trading Range (只在左侧 SC 处标注一次即可，或者在右侧延伸)
-ax_main.text(x_start_idx, tr_top, f"TR 上沿: {tr_top:.4f}", color='red', fontsize=12, ha='right', va='bottom', fontproperties=font_prop)
-ax_main.text(x_start_idx, tr_bottom, f"TR 下沿: {tr_bottom:.4f}", color='green', fontsize=12, ha='right', va='top', fontproperties=font_prop)
+# 3. 添加左上角数据盒 (Master Box)
+info_text = (
+    f"SYMBOL: {base_name.split('_')[0]}\n"
+    f"INTERVAL: {base_name.split('_')[1]}\n"
+    f"CURRENT: {plot_df['Close'].iloc[-1]:.4f}\n"
+    f"TR TOP: {tr_top:.4f}\n"
+    f"TR BOT: {tr_bottom:.4f}"
+)
+props = dict(boxstyle='round', facecolor='#1A1A1A', alpha=0.8, edgecolor=COLOR_GOLD, lw=1.5)
+ax_main.text(0.02, 0.95, info_text, transform=ax_main.transAxes, fontsize=12,
+             verticalalignment='top', bbox=props, color=COLOR_TEXT, fontfamily='monospace')
 
-# [新增] 打印分析数据供 AI 生成报告
+# 4. 优化坐标轴
+ax_main.yaxis.set_label_position("right")
+ax_main.tick_params(colors=COLOR_TEXT, which='both')
+for spine in ax_main.spines.values():
+    spine.set_edgecolor(COLOR_GRID)
+
+# --- 6. 导出图片 & 报告 ---
+output_file = f"{base_name}_Wyckoff_Chart.png"
+plt.savefig(output_file, dpi=120, facecolor='#121212')
+print(f"💾 图片已保存: {output_file}")
+
+# 打印数据供 AI 参考
 print("\n=== AI 分析数据源 ===")
 print(f"TR 上沿 (AR): {tr_top:.4f}")
 print(f"TR 下沿 (SC): {tr_bottom:.4f}")
-print(f"SC 日期: {t_start}")
+print(f"SC 日期: {min_idx}")
 print(f"当前价格: {plot_df['Close'].iloc[-1]:.4f}")
 print("=====================\n")
 
-# 保存 (动态文件名)
-output_file = f"{base_name}_Wyckoff_Chart.png"
-# 移除 bbox_inches='tight'，因为它可能导致尺寸计算异常
-# 设置固定的 dpi=150，配合 figsize=(24, 12)，输出图片宽度约为 3600px，足够清晰且不会过大
-plt.savefig(output_file, dpi=150) 
-print(f"💾 图片已保存: {output_file}")
-
-# --- 5. 自动生成 Markdown 分析报告 ---
+# 生成 Markdown 报告内容
 md_output_file = f"{base_name}_Wyckoff_Analysis.md"
-
-# 解析基础信息
-symbol_interval = base_name.replace("_", " ")  # e.g. "ADAUSDC 4h"
 current_date = pd.Timestamp.now().strftime("%Y-%m-%d")
-data_start_date = df.index[0].strftime("%Y-%m-%d")
-data_end_date = df.index[-1].strftime("%Y-%m-%d %H:%M")
+analysis_template = f"""# 威科夫深度研报: {base_name.replace("_", " ")}
 
-analysis_template = f"""# 威科夫分析报告: {symbol_interval}
-
-**日期**: {current_date} (自动生成)
-**分析对象**: {symbol_interval}
-**数据范围**: {data_start_date} 至 {data_end_date}
+**分析日期**: {current_date}
+**数据范围**: {plot_df.index[0].strftime("%Y-%m-%d")} -> {plot_df.index[-1].strftime("%Y-%m-%d %H:%M")}
 
 ---
 
-## 1. 威科夫事件标注图
+## 1. 威科夫全景透视图 (Master View)
 
 ![Wyckoff Chart](./{os.path.basename(output_file)})
 
 ---
 
-## 2. 市场结构分析 (自动识别)
+## 2. 核心量价数据
 
-### 关键价格区间 (Trading Range)
-*   **上沿 (Resistance / AR)**: **{tr_top:.4f}**
-*   **下沿 (Support / SC)**: **{tr_bottom:.4f}**
-*   **当前价格**: **{plot_df['Close'].iloc[-1]:.4f}**
-
-### 结构判读
-*   **SC (恐慌抛售) 日期**: {t_start}
-*   **状态**: 价格目前处于 TR 区间 {'上方' if plot_df['Close'].iloc[-1] > tr_top else '下方' if plot_df['Close'].iloc[-1] < tr_bottom else '内部'}。
+| 指标 | 数值 | 威科夫含义 |
+| :--- | :--- | :--- |
+| **TR 上沿 (Resistance)** | **{tr_top:.4f}** | 供应释放区 (AR/LPSY) |
+| **TR 下沿 (Support)** | **{tr_bottom:.4f}** | 需求介入区 (SC/Spring) |
+| **当前价格 (Closing)** | **{plot_df['Close'].iloc[-1]:.4f}** | {'区间震荡中' if tr_bottom <= plot_df['Close'].iloc[-1] <= tr_top else '寻求趋势突破'} |
 
 ---
 
-## 3. 交易参考策略
+## 3. 结构化简述
 
-*   **区间操作**:
-    *   **做多观察区**: 接近 SC 低点 ({tr_bottom:.4f}) 且缩量时。
-    *   **做空观察区**: 接近 AR 高点 ({tr_top:.4f}) 且滞涨时。
-*   **趋势突破**:
-    *   若有效突破 **{tr_top:.4f}**，关注回踩确认 (SOS)。
-    *   若跌破 **{tr_bottom:.4f}**，警惕强力供应 (Mark Down)。
+1. **结构形态**: 价格目前处于由 {tr_bottom:.4f} 与 {tr_top:.4f} 构成的交易区间 (Trading Range) 内。
+2. **量价特征**: 识别到关键的 {'恐慌抛售 (SC)' if min_idx in plot_df.index else '震荡低点'}。
+3. **主点位参考**: 
+   - **防御位**: {tr_bottom:.4f} (若持续放量跌破，标志着派发完成)。
+   - **进攻位**: {tr_top:.4f} (若缩量回踩不破，标志着吸筹完成)。
 
 ---
-
-> *注: 本报告由脚本自动根据 Wyckoff 逻辑生成，仅供参考。*
+> *本报告由智能分析系统生成。威科夫法则提示：在结果显现之前，请耐心等待供求平衡的打破。*
 """
 
 with open(md_output_file, "w", encoding="utf-8") as f:
     f.write(analysis_template)
 
-print(f"📝 报告已生成: {md_output_file}")
+print(f"📝 报告已更新: {md_output_file}")
