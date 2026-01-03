@@ -203,3 +203,58 @@ output_file = f"{base_name}_Wyckoff_Chart.png"
 # 设置固定的 dpi=150，配合 figsize=(24, 12)，输出图片宽度约为 3600px，足够清晰且不会过大
 plt.savefig(output_file, dpi=150) 
 print(f"💾 图片已保存: {output_file}")
+
+# --- 5. 自动生成 Markdown 分析报告 ---
+md_output_file = f"{base_name}_Wyckoff_Analysis.md"
+
+# 解析基础信息
+symbol_interval = base_name.replace("_", " ")  # e.g. "ADAUSDC 4h"
+current_date = pd.Timestamp.now().strftime("%Y-%m-%d")
+data_start_date = df.index[0].strftime("%Y-%m-%d")
+data_end_date = df.index[-1].strftime("%Y-%m-%d %H:%M")
+
+analysis_template = f"""# 威科夫分析报告: {symbol_interval}
+
+**日期**: {current_date} (自动生成)
+**分析对象**: {symbol_interval}
+**数据范围**: {data_start_date} 至 {data_end_date}
+
+---
+
+## 1. 威科夫事件标注图
+
+![Wyckoff Chart](./{os.path.basename(output_file)})
+
+---
+
+## 2. 市场结构分析 (自动识别)
+
+### 关键价格区间 (Trading Range)
+*   **上沿 (Resistance / AR)**: **{tr_top:.4f}**
+*   **下沿 (Support / SC)**: **{tr_bottom:.4f}**
+*   **当前价格**: **{plot_df['Close'].iloc[-1]:.4f}**
+
+### 结构判读
+*   **SC (恐慌抛售) 日期**: {t_start}
+*   **状态**: 价格目前处于 TR 区间 {'上方' if plot_df['Close'].iloc[-1] > tr_top else '下方' if plot_df['Close'].iloc[-1] < tr_bottom else '内部'}。
+
+---
+
+## 3. 交易参考策略
+
+*   **区间操作**:
+    *   **做多观察区**: 接近 SC 低点 ({tr_bottom:.4f}) 且缩量时。
+    *   **做空观察区**: 接近 AR 高点 ({tr_top:.4f}) 且滞涨时。
+*   **趋势突破**:
+    *   若有效突破 **{tr_top:.4f}**，关注回踩确认 (SOS)。
+    *   若跌破 **{tr_bottom:.4f}**，警惕强力供应 (Mark Down)。
+
+---
+
+> *注: 本报告由脚本自动根据 Wyckoff 逻辑生成，仅供参考。*
+"""
+
+with open(md_output_file, "w", encoding="utf-8") as f:
+    f.write(analysis_template)
+
+print(f"📝 报告已生成: {md_output_file}")
